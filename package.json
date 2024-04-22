@@ -1,6 +1,6 @@
 {
   "name": "ufc-node-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "nodejs SDK for ufc.ge",
   "publishConfig": {
     "access": "public",
@@ -20,6 +20,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup",
+    "dev": "tsup src/dev.ts --env.LOG \"true\"  --format esm --watch --sourcemap --clean --onSuccess \"node dist/dev.js\"",
     "release": "yarn build && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

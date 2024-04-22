@@ -352,7 +352,7 @@ export default class UfcClient {
     options: UfcPayRegister
   ): Promise<UfcPayRegisterResponse> {
     const amount = options.amount === undefined ? 0 : options.amount;
-    const command = options.preAuth && options.amount === 0 ? "p" : "z";
+    const command = options.preAuth && amount === 0 ? "p" : "z";
 
     const query = this._buildQuery({
       command,
