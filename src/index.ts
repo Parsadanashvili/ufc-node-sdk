@@ -444,8 +444,6 @@ export default class UfcClient {
 
     const data = this._parseResponse(response);
 
-    console.log(data);
-
     return {
       result: {
         status: data.result.toLowerCase() as "ok" | "failed",
