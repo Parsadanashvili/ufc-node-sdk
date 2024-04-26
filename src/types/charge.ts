@@ -4,6 +4,11 @@ export type UfcPayCharge = BaseUfcPayRequest & {
   token: string;
   amount: number;
   currency?: number;
+  // split?: {
+  //   iban: string;
+  //   amount: number;
+  // };
+  preAuth?: boolean;
   options?: Omit<UfcPayOptions, "currency">;
 };
 

@@ -121,6 +121,8 @@ export default class UfcClient {
       language: options.language || "ge",
       currency: options.currency || this._config.currency,
       amount: options.amount,
+      // extra: options.split?.iban,
+      // extra2: options.split?.amount,
       msg_type: options.preAuth ? "DMS" : "SMS",
     });
 
@@ -161,6 +163,7 @@ export default class UfcClient {
       language: options.language || "ge",
       currency: options.currency || this._config.currency,
       amount: options.amount,
+      msg_type: "DMS",
     });
 
     if (options.options) this._updateOptions(options.options);
@@ -400,7 +403,10 @@ export default class UfcClient {
       language: options.language || "ge",
       currency: options.currency || this._config.currency,
       amount: options.amount,
-      perspayee_expiry: options.token,
+      biller_client_id: options.token,
+      // biller: options.split?.iban,
+      // biller_amount: options.split?.amount,
+      msg_type: options.preAuth ? "DMS" : "SMS",
     });
 
     if (options.options) this._updateOptions(options.options);

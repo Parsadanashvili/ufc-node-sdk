@@ -3,7 +3,7 @@ import { UfcPayOptions } from "./base";
 export type UfcPayRefund = {
   ip: string;
   transactionId: string;
-  amount: number;
+  amount?: number;
   options?: Omit<UfcPayOptions, "currency">;
 };
 
