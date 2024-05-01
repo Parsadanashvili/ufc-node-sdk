@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { UFC_CLIENT_HANDLER_URL, UFC_URL } from "./constants";
 import { HttpsProxyAgent } from "https-proxy-agent";
-import camelCase from "lodash/camelCase";
+import camelCase from "lodash/camelCase.js";
 import type {
   BaseUfcPayRequest,
   UfcPayAuthorize,
@@ -121,8 +121,8 @@ export default class UfcClient {
       language: options.language || "ge",
       currency: options.currency || this._config.currency,
       amount: options.amount,
-      // extra: options.split?.iban,
-      // extra2: options.split?.amount,
+      payee: options.split?.iban,
+      biller: options.split?.amount,
       msg_type: options.preAuth ? "DMS" : "SMS",
     });
 
@@ -163,6 +163,8 @@ export default class UfcClient {
       language: options.language || "ge",
       currency: options.currency || this._config.currency,
       amount: options.amount,
+      payee: options.split?.iban,
+      biller: options.split?.amount,
       msg_type: "DMS",
     });
 
@@ -397,15 +399,15 @@ export default class UfcClient {
    */
   public async charge(options: UfcPayCharge): Promise<UfcPayChargeResponse> {
     const query = this._buildQuery({
-      command: "e",
+      command: options.preAuth ? "f" : "e",
       client_ip_addr: options.ip,
       description: options.description || "",
       language: options.language || "ge",
       currency: options.currency || this._config.currency,
       amount: options.amount,
       biller_client_id: options.token,
-      // biller: options.split?.iban,
-      // biller_amount: options.split?.amount,
+      payee: options.split?.iban,
+      biller: !options.preAuth ? options.split?.amount : undefined,
       msg_type: options.preAuth ? "DMS" : "SMS",
     });
 

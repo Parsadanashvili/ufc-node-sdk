@@ -3,7 +3,11 @@ import { BaseUfcPayRequest, UfcPayOptions } from "./base";
 export type UfcPayAuthorize = BaseUfcPayRequest & {
   transactionId: string;
   currency?: number;
-  amount: number;
+  split?: {
+    iban: string;
+    amount: number;
+  };
+  amount?: number;
   options?: Omit<UfcPayOptions, "currency">;
 };
 
