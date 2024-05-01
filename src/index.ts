@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { UFC_CLIENT_HANDLER_URL, UFC_URL } from "./constants";
 import { HttpsProxyAgent } from "https-proxy-agent";
-import camelCase from "lodash/camelCase.js";
+import camelCase from "lodash/camelCase";
 import type {
   BaseUfcPayRequest,
   UfcPayAuthorize,
