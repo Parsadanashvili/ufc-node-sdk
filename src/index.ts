@@ -122,7 +122,7 @@ export default class UfcClient {
       currency: options.currency || this._config.currency,
       amount: options.amount,
       payee: options.split?.iban,
-      biller: options.split?.amount,
+      biller: options.split?.amount ? options.split.amount / 100 : undefined,
       msg_type: options.preAuth ? "DMS" : "SMS",
     });
 
@@ -164,7 +164,7 @@ export default class UfcClient {
       currency: options.currency || this._config.currency,
       amount: options.amount,
       payee: options.split?.iban,
-      biller: options.split?.amount,
+      biller: options.split?.amount ? options.split.amount / 100 : undefined,
       msg_type: "DMS",
     });
 
@@ -407,7 +407,7 @@ export default class UfcClient {
       amount: options.amount,
       biller_client_id: options.token,
       payee: options.split?.iban,
-      biller: !options.preAuth ? options.split?.amount : undefined,
+      biller: options.split?.amount ? options.split.amount / 100 : undefined,
       msg_type: options.preAuth ? "DMS" : "SMS",
     });
 
