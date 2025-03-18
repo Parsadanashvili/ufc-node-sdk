@@ -4,6 +4,7 @@ export type UfcPayStatus = {
   ip: string;
   transactionId: string;
   options?: Omit<UfcPayOptions, "currency">;
+  query?: Record<string, string>;
 };
 
 // TODO: Add more fields to UfcPayStatusResponse

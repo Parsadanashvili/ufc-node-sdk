@@ -5,6 +5,7 @@ export type UfcPayRefund = {
   transactionId: string;
   amount?: number;
   options?: Omit<UfcPayOptions, "currency">;
+  query?: Record<string, string>;
 };
 
 export type UfcPayRefundResponse = {

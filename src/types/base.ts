@@ -8,11 +8,12 @@ export type UfcPayOptions = {
     url: string;
     options?: HttpsProxyAgentOptions<string>;
   };
-}
+};
 
 export type BaseUfcPayRequest = {
   ip: string;
   description?: string;
   language?: "ka" | "ge" | "en" | "ru";
+  query?: Record<string, string>;
   options?: Omit<UfcPayOptions, "currency">;
 };

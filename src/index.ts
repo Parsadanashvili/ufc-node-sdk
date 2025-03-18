@@ -55,7 +55,7 @@ export default class UfcClient {
     if (options?.httpAgent) {
       this._request.defaults.proxy = false;
       this._request.defaults.httpsAgent = new HttpsProxyAgent(
-        options?.httpAgent.url
+        options?.httpAgent.url,
       );
     }
 
@@ -84,7 +84,7 @@ export default class UfcClient {
   };
 
   private _parseResponse = <T = Record<string, string>>(
-    response: AxiosResponse
+    response: AxiosResponse,
   ) => {
     const text = response.data;
 
@@ -124,12 +124,13 @@ export default class UfcClient {
       payee: options.split?.iban,
       biller: options.split?.amount ? options.split.amount / 100 : undefined,
       msg_type: options.preAuth ? "DMS" : "SMS",
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data =
@@ -153,7 +154,7 @@ export default class UfcClient {
    * @param amount - Amount for charging (amount may be less than or equal to the authorized amount, subtract amount will be refunded)
    */
   public async authorize(
-    options: UfcPayAuthorize
+    options: UfcPayAuthorize,
   ): Promise<UfcPayAuthorizeResponse> {
     const query = this._buildQuery({
       command: "t",
@@ -166,12 +167,13 @@ export default class UfcClient {
       payee: options.split?.iban,
       biller: options.split?.amount ? options.split.amount / 100 : undefined,
       msg_type: "DMS",
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data = this._parseResponse(response);
@@ -201,12 +203,13 @@ export default class UfcClient {
       command: "c",
       client_ip_addr: options.ip,
       trans_id: options.transactionId,
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data = this._parseResponse(response);
@@ -214,12 +217,12 @@ export default class UfcClient {
     return {
       result: {
         status: String(
-          data.result
+          data.result,
         ).toLowerCase() as UfcPayStatusResponse["result"]["status"],
         code: data.resultCode,
       },
       "3dsecure": String(
-        data["3Dsecure"]
+        data["3Dsecure"],
       ).toLowerCase() as UfcPayStatusResponse["3dsecure"],
       rrn: data.rrn,
       approvalCode: data.approvalCode,
@@ -248,12 +251,13 @@ export default class UfcClient {
       client_ip_addr: options.ip,
       trans_id: options.transactionId,
       amount: options.amount,
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data = this._parseResponse(response);
@@ -284,12 +288,13 @@ export default class UfcClient {
       client_ip_addr: options.ip,
       trans_id: options.transactionId,
       amount: options.amount,
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data = this._parseResponse(response);
@@ -310,12 +315,13 @@ export default class UfcClient {
     const query = this._buildQuery({
       command: "b",
       ip: options.ip,
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data = this._parseResponse(response);
@@ -354,7 +360,7 @@ export default class UfcClient {
    * @param preAuth - Pre-authorization flag
    */
   public async register(
-    options: UfcPayRegister
+    options: UfcPayRegister,
   ): Promise<UfcPayRegisterResponse> {
     const amount = options.amount === undefined ? 0 : options.amount;
     const command = options.preAuth && amount === 0 ? "p" : "z";
@@ -370,12 +376,13 @@ export default class UfcClient {
       biller_client_id: options.token,
       msg_type: options.preAuth ? "AUTH" : "SMS",
       perspayee_gen: 1,
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data = this._parseResponse(response);
@@ -409,12 +416,13 @@ export default class UfcClient {
       payee: options.split?.iban,
       biller: options.split?.amount ? options.split.amount / 100 : undefined,
       msg_type: options.preAuth ? "DMS" : "SMS",
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data = this._parseResponse(response);
@@ -442,12 +450,13 @@ export default class UfcClient {
       command: "g",
       amount: options.amount,
       trans_id: options.transactionId,
+      ...options.query,
     });
 
     if (options.options) this._updateOptions(options.options);
 
     const response = await this._request.post(
-      `/ecomm2/MerchantHandler?${query}`
+      `/ecomm2/MerchantHandler?${query}`,
     );
 
     const data = this._parseResponse(response);
